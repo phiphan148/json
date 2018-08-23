@@ -1,0 +1,51 @@
+function getDataHouse() {
+    let table2 = document.getElementById("house-data");
+    let memhouse = datahouse.results[0].members;
+    let theader = table2.createTHead();
+    let headrow = theader.insertRow(0);
+    let headcell1 = document.createElement("th");
+    let headcell2 = document.createElement("th");
+    let headcell3 = document.createElement("th");
+    let headcell4 = document.createElement("th");
+    let headcell5 = document.createElement("th");
+    headcell1.innerHTML = 'Full Name';
+    headcell2.innerHTML = 'Party';
+    headcell3.innerHTML = 'State';
+    headcell4.innerHTML = 'Seniority';
+    headcell5.innerHTML = 'Percentage of vote';
+    headrow.appendChild(headcell1);
+    headrow.appendChild(headcell2);
+    headrow.appendChild(headcell3);
+    headrow.appendChild(headcell4);
+    headrow.appendChild(headcell5);
+    theader.className += "thead-dark";
+    let tbody = table2.createTBody();
+    for (let i = 0; i < memhouse.length; i++) {
+        let firstname = memhouse[i].first_name;
+        let middlename = memhouse[i].middle_name;;
+        let lastname = memhouse[i].last_name;
+        let fullname = firstname + ' ' + middlename + ' ' + lastname;
+        let party = memhouse[i].party;
+        let state = memhouse[i].state;
+        let seniority = memhouse[i].seniority;
+        let percentage_vote = memhouse[i].votes_with_party_pct;
+        let row = document.createElement("tr");
+        let cell1 = document.createElement("td");
+        cell1.innerHTML = fullname;
+        let cell2 = document.createElement("td");
+        cell2.innerHTML = party;
+        let cell3 = document.createElement("td");
+        cell3.innerHTML = state;
+        let cell4 = document.createElement("td");
+        cell4.innerHTML = seniority;
+        let cell5 = document.createElement("td");
+        cell5.innerHTML = percentage_vote + '%';
+        row.appendChild(cell1);
+        row.appendChild(cell2);
+        row.appendChild(cell3);
+        row.appendChild(cell4);
+        row.appendChild(cell5);
+        tbody.appendChild(row);
+    }
+}
+getDataHouse();
