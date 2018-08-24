@@ -5,14 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
-        <style>
-            #senate-states{
-                position: absolute; will-change: transform; transform: none!important; top: 28px!important; left: 0px;
-            }
-            #senate-states li{
-                list-style: none!important;
-            }
-        </style>
+    <style>
+        #select-states {
+            min-width: 60px;
+        }
+    </style>
     <title>Data from senate</title>
 </head>
 
@@ -67,26 +64,19 @@
                 and other federal uniformed officers, as well as trial of federal officials impeached by the House.</p>
             <div class="filter-all-data container">
                 <div class="row">
-                    <span class="pr-2"><input id="democrat" class="checkparty mr-1" type="checkbox" name="Democrat" onclick="filterData()"
-                            value="D">Democrat</span>
-                    <span class="pr-2"><input id="republican" class="checkparty mr-1" type="checkbox" name="Republican" onclick="filterData()"
-                            value="R">Republican</span>
-                    <span class="pr-2"><input id="independent" class="checkparty mr-1" type="checkbox" name="Independent"
-                            onclick="filterData()" value="I">Independent</span>
-                    <span>
-                        <div class="btn-group">
-                            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Choose state
-                            </button>
-                            <div id="senate-states" class="dropdown-menu">
-                                
-                            </div>
-                        </div>
-                    </span>
+                    <form action="">
+                        <span class="pr-2"><input id="democrat" class="checkparty mr-1" type="checkbox" name="Democrat" onclick="filterData()"
+                                value="D">Democrat</span>
+                        <span class="pr-2"><input id="republican" class="checkparty mr-1" type="checkbox" name="Republican"
+                                onclick="filterData()" value="R">Republican</span>
+                        <span class="pr-2"><input id="independent" class="checkparty mr-1" type="checkbox" name="Independent"
+                                onclick="filterData()" value="I">Independent</span>
+                            <span id="senate-states">
+
+                            </span>
+                    </form>
                 </div>
             </div>
-
-
             <table id="senate-data" class="table table-borderless mt-5 filter-states">
             </table>
         </div>

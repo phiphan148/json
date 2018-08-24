@@ -1,25 +1,37 @@
-function getSates(){
+// TEST
+console.log(memsenate[1].state);
+g = ["jorge", "phi", "josh"];
+g.filter(function(data){return data == "jorge";});
+
+//Get states from datasemate
+function getSates() {
     let states = [];
-    for(let i=0; i<memsenate.length; i++){
-        if(!states.includes(memsenate[i].state)){
-        states.push(memsenate[i].state);
-    }
+    for (let i = 0; i < memsenate.length; i++) {
+        if (!states.includes(memsenate[i].state)) {
+            states.push(memsenate[i].state);
+        }
     }
     return states;
 }
 getSates();
 
-function displayStateList(states){
+//Display states in Html
+function displayStateList(states) {
     let listSates = document.getElementById('senate-states');
-    let list = document.createElement('ul');
+    let list = document.createElement('select');
+    list.setAttribute('id','select-states');
+    list.setAttribute('onchange','filterData()');
     listSates.appendChild(list);
-    for (let i=0; i<states.length; i++){
+    for (let i = 0; i < states.length; i++) {
         console.log('add row');
-        let statesData = document.createElement('li');
-        let statesDataTxt = document.createElement('a');
-        statesDataTxt.innerHTML = states[i];
+        let statesData = document.createElement('option');
+        statesData.className += 'states-list';
+        statesData.value = states[i];
+        statesData.innerHTML = states[i];
         list.appendChild(statesData);
-        statesData.appendChild(statesDataTxt);
+        list.firstChild.innerHTML = 'Choose state';
+        list.firstChild.setAttribute('value','');
+        statesData.setAttribute('onclick', "filterData()");
     }
 }
 displayStateList(getSates());
