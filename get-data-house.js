@@ -1,51 +1,97 @@
+// document.getElementById("senate-data").innerHTML = JSON.stringify(data,null,2);
+let memHouse = datahouse.results[0].members;
+let table = document.getElementById("house-data");
+
+//Create header of the table of Senate data
+createThead(table);
+
+//Create body Table
+function createTbodyOfTable(i, tbody) {
+    console.log('add row');
+    let fullname = (memHouse[i].first_name + ' ' + memHouse[i].middle_name + ' ' + memHouse[i].last_name).link(memHouse[i].url);
+    let bodyArray = [fullname, memHouse[i].party, memHouse[i].state, memHouse[i].seniority, memHouse[i].votes_with_party_pct + '%'];
+    let row = tbody.insertRow();
+    for (let j = 0; j < bodyArray.length; j++) {
+        let cell = row.insertCell();
+        cell.innerHTML = bodyArray[j].replace(null, ' ');
+    }
+    row.firstChild.firstChild.className += 'text-body';
+}
+
+//Create body of the table display all members in senate
 function getDataHouse() {
-    let table2 = document.getElementById("house-data");
-    let memhouse = datahouse.results[0].members;
-    let theader = table2.createTHead();
-    let headrow = theader.insertRow(0);
-    let headcell1 = document.createElement("th");
-    let headcell2 = document.createElement("th");
-    let headcell3 = document.createElement("th");
-    let headcell4 = document.createElement("th");
-    let headcell5 = document.createElement("th");
-    headcell1.innerHTML = 'Full Name';
-    headcell2.innerHTML = 'Party';
-    headcell3.innerHTML = 'State';
-    headcell4.innerHTML = 'Seniority';
-    headcell5.innerHTML = 'Percentage of vote';
-    headrow.appendChild(headcell1);
-    headrow.appendChild(headcell2);
-    headrow.appendChild(headcell3);
-    headrow.appendChild(headcell4);
-    headrow.appendChild(headcell5);
-    theader.className += "thead-dark";
-    let tbody = table2.createTBody();
-    for (let i = 0; i < memhouse.length; i++) {
-        let firstname = memhouse[i].first_name;
-        let middlename = memhouse[i].middle_name;;
-        let lastname = memhouse[i].last_name;
-        let fullname = firstname + ' ' + middlename + ' ' + lastname;
-        let party = memhouse[i].party;
-        let state = memhouse[i].state;
-        let seniority = memhouse[i].seniority;
-        let percentage_vote = memhouse[i].votes_with_party_pct;
-        let row = document.createElement("tr");
-        let cell1 = document.createElement("td");
-        cell1.innerHTML = fullname;
-        let cell2 = document.createElement("td");
-        cell2.innerHTML = party;
-        let cell3 = document.createElement("td");
-        cell3.innerHTML = state;
-        let cell4 = document.createElement("td");
-        cell4.innerHTML = seniority;
-        let cell5 = document.createElement("td");
-        cell5.innerHTML = percentage_vote + '%';
-        row.appendChild(cell1);
-        row.appendChild(cell2);
-        row.appendChild(cell3);
-        row.appendChild(cell4);
-        row.appendChild(cell5);
-        tbody.appendChild(row);
+    let tbody = table.createTBody();
+    for (let i = 0; i < memHouse.length; i++) {
+        createTbodyOfTable(i, tbody, memHouse);
     }
 }
-getDataHouse();
+
+//Display state list
+function displayStateList(array) {
+    let states = [];
+    for (let i = 0; i < array.length; i++) {
+        if (!states.includes(array[i].state)) {
+            states.push(array[i].state);
+        }
+    }
+    let listSates = document.querySelector('.states');
+    let list = document.createElement('select');
+    list.setAttribute('class', 'select-states');
+    list.setAttribute('onchange', 'filterDataHouse()');
+    listSates.appendChild(list);
+    for (let i = 0; i < states.length; i++) {
+        let statesData = document.createElement('option');
+        statesData.value = states[i];
+        statesData.innerHTML = states[i];
+        list.appendChild(statesData);
+        list.firstChild.innerHTML = 'Choose state';
+        list.firstChild.setAttribute('value', '');
+    }
+}
+displayStateList(memHouse);
+
+//Main function
+function filterDataHouse() {
+    removeOldTbody();
+    let array = [];
+    let checkedValue = document.getElementsByClassName('checkparty');
+    for (let j = 0; j < checkedValue.length; j++) {
+        if (checkedValue[j].checked) {
+            array.push(checkedValue[j].value);
+        }
+    }
+
+    let arrayOption = [];
+    let arrayClick = document.querySelector('.select-states');
+    let value = arrayClick[arrayClick.selectedIndex].value;
+    arrayOption.push(value);
+
+    let tbody = table.createTBody('tbody');
+
+    if (array.length != 0 && arrayOption == "") {
+        for (let k = 0; k < array.length; k++) {
+            for (let i = 0; i < memHouse.length; i++) {
+                if (memHouse[i].party === array[k]) {
+                    createTbodyOfTable(i, tbody);
+                }
+            }
+        }
+    } else if (array.length != 0 && arrayOption != "") {
+        for (let k = 0; k < array.length; k++) {
+            for (let i = 0; i < memHouse.length; i++) {
+                if (memHouse[i].party === array[k] && memHouse[i].state == value) {
+                    createTbodyOfTable(i, tbody);
+                }
+            }
+        }
+    } else if (array.length == 0 && arrayOption != "") {
+        for (let i = 0; i < memHouse.length; i++) {
+            if (memHouse[i].state == value) {
+                createTbodyOfTable(i, tbody);
+            }
+        }
+    } else {
+        getDataHouse();
+    }
+}
+filterDataHouse();

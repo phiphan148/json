@@ -59,7 +59,22 @@
                 Electoral College.</p>
             <p>Each U.S. state is represented in the House in proportion to its population as measured in the census, but
                 every state is entitled to at least one representative. </p>
-            <table id="house-data" class="table table-borderless">
+            <div class="filter-all-data container">
+                <div class="row">
+                    <form action="">
+                        <span class="pr-2"><input id="democrat" class="checkparty mr-1" type="checkbox" name="Democrat" onclick="filterDataHouse()"
+                                value="D">Democrat</span>
+                        <span class="pr-2"><input id="republican" class="checkparty mr-1" type="checkbox" name="Republican"
+                                onclick="filterDataHouse()" value="R">Republican</span>
+                        <span class="pr-2"><input id="independent" class="checkparty mr-1" type="checkbox" name="Independent"
+                                onclick="filterDataHouse()" value="I">Independent</span>
+                        <span class="states">
+
+                        </span>
+                    </form>
+                </div>
+            </div>
+            <table id="house-data" class="table table-borderless mt-5 filter-states">
 
             </table>
         </div>
@@ -69,6 +84,7 @@
 
     </div>
     <script src="congress-113-house.js"></script>
+    <script src="main.js"></script>
     <script src="get-data-house.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
