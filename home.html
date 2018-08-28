@@ -6,6 +6,21 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
     <link href="https://unpkg.com/ionicons@4.3.0/dist/css/ionicons.min.css" rel="stylesheet">
+    <style>
+        #summary p.collapse:not(.show) {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        #summary a.collapsed:after {
+            content: 'Read More';
+        }
+
+        #summary a:not(.collapsed):after {
+            content: 'Read Less';
+        }
+    </style>
     <title>Home</title>
 </head>
 
@@ -46,6 +61,24 @@
                                 <a class="dropdown-item" href="./house-data.html">House</a>
                             </div>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link text-body" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Attendance</a>
+                            <span class="caret"></span>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="./senate-attendance.html">Senate</a>
+                                <a class="dropdown-item" href="./house-attendance.html">House</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link text-body" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Party
+                                Loyalty
+                            </a>
+                            <span class="caret"></span>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="./senate-party-loyalty.html">Senate</a>
+                                <a class="dropdown-item" href="./house-party-loyalty.html">House</a>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -70,40 +103,34 @@
                     </p>
                     <p>TGIF works to disclose information in forms that the public can readily find and use. We solicit public
                         feedback to identify information of greatest use to the public.</p>
-                    <div class="accordion" id="accordionExample">
-                        <div id="content-inside" class="collapse" aria-labelledby="heading" data-parent="#accordionExample">
-                            <div>
-                                <h3>Background History of Government Transparency</h3>
-                                <p>In the West, the idea that government should be open to public scrutiny and susceptible
-                                    to public opinion dates back at least to the time of the Enlightenment, when many philosophes
-                                    made an attack on absolutist doctrine of state secrecy, a core part of their intellectual
-                                    project. The passage of formal legislative instruments to this end can also be traced
-                                    to this time with Sweden, for example, (which then included Finland as a Swedish-governed
-                                    territory) enacting free press legislation as part of its constitution (Freedom of the
-                                    Press Act, 1766). This approach, and that of the philosophes more broadly, is strongly
-                                    related to recent historiography on the eighteenth-century public sphere.</p>
-                                <p>Influenced by Enlightenment thought, the revolutions in America (1776) and France (1789),
-                                    freedom of the press enshrined provisions and requirements for public budgetary accounting
-                                    and freedom of the press in constitutional articles. In the nineteenth century, attempts
-                                    by Metternichean statesmen to row back on these measures were vigorously opposed by a
-                                    number of eminent liberal politicians and writers, Bentham, Mill and Acton prominent
-                                    among the latter.</p>
+                    <div id="summary">
+                        <div class="collapse" id="collapseSummary">
+                            <h3>Background History of Government Transparency</h3>
+                            <p>In the West, the idea that government should be open to public scrutiny and susceptible to
+                                public opinion dates back at least to the time of the Enlightenment, when many philosophes
+                                made an attack on absolutist doctrine of state secrecy, a core part of their intellectual
+                                project. The passage of formal legislative instruments to this end can also be traced to
+                                this time with Sweden, for example, (which then included Finland as a Swedish-governed territory)
+                                enacting free press legislation as part of its constitution (Freedom of the Press Act, 1766).
+                                This approach, and that of the philosophes more broadly, is strongly related to recent historiography
+                                on the eighteenth-century public sphere.</p>
+                            <p>Influenced by Enlightenment thought, the revolutions in America (1776) and France (1789),
+                                freedom of the press enshrined provisions and requirements for public budgetary accounting
+                                and freedom of the press in constitutional articles. In the nineteenth century, attempts
+                                by Metternichean statesmen to row back on these measures were vigorously opposed by a number
+                                of eminent liberal politicians and writers, Bentham, Mill and Acton prominent among the latter.</p>
 
-                                <p>Open government is widely seen to be a key hallmark of contemporary democratic practice
-                                    and is often linked to the passing of freedom of information legislation. Scandinavian
-                                    countries claim to have adopted the first freedom of information legislation, dating
-                                    the origins of its modern provisions to the eighteenth century and Finland continuing
-                                    the presumption of openness after gaining independence in 1917, passing its Act on Publicity
-                                    of Official Documents in 1951 (superseded by new legislation in 1999).</p>
+                            <p>Open government is widely seen to be a key hallmark of contemporary democratic practice and
+                                is often linked to the passing of freedom of information legislation. Scandinavian countries
+                                claim to have adopted the first freedom of information legislation, dating the origins of
+                                its modern provisions to the eighteenth century and Finland continuing the presumption of
+                                openness after gaining independence in 1917, passing its Act on Publicity of Official Documents
+                                in 1951 (superseded by new legislation in 1999).</p>
 
-                                <p>The United States passed its Freedom of Information Act (FOIA) in 1966, FOIAs, Access
-                                    to Information Acts (AIAs) or equivalent laws were passed in Denmark and Norway in 1970.</p>
-                            </div>
+                            <p>The United States passed its Freedom of Information Act (FOIA) in 1966, FOIAs, Access to Information
+                                Acts (AIAs) or equivalent laws were passed in Denmark and Norway in 1970.</p>
                         </div>
-                        <div id="heading">
-                            <a data-toggle="collapse" data-target="#content-inside" aria-expanded="false" aria-controls="content-inside" href="#">
-                                Read more</a>
-                        </div>
+                        <a class="collapsed text-info" data-toggle="collapse" href="#collapseSummary" aria-expanded="false" aria-controls="collapseSummary"></a>
                     </div>
                 </div>
                 <div class="col-4 text-center justify-content-center align-self-center">
