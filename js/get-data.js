@@ -1,9 +1,48 @@
 // document.getElementById("mem-data").innerHTML = JSON.stringify(data,null,2);
-let memberData = data.results[0].members;
-let table = document.getElementById("mem-data");
+var data;
+
+var dataByVue = new Vue({  
+    el: '#congress-table',  
+    data: {    
+      senator : [],
+    },
+  }); 
+
+onload = (function () {
+    let pathSenate = 'senate';
+    // let pathHouse = 'house';
+    let url = '';
+    let currentPage = window.location.href;
+    if (currentPage.includes(pathSenate)) {
+        url = 'https://api.myjson.com/bins/1eja30';
+
+    } else {
+        url = 'https://api.myjson.com/bins/j83do';
+    }
+
+    fetch(url)
+        // fetch('https://api.propublica.org/congress/v1/113/senate/members.json', {
+        //        headers: new Headers({
+        //        'X-API-Key': 'IDNOGYtoaM3H3Og0JfELv2zGX5cPeooGRMCiUWdl'
+        //        })
+        //    })
+        .then(response => response.json())
+        .then((jsonData) => {
+            data = jsonData;
+            dataByVue.senator = data.results[0].members;
+            let memberData = data.results[0].members;
+            let table = document.getElementById("mem-data");
+            myFunction(table, memberData);
+        });
+})
+
+function myFunction(table, memberData) {
+    createThead(table);
+    displayStateList(memberData);
+}
 
 //Create header of the table
-function createThead() {
+function createThead(table) {
     let theader = table.createTHead();
     theader.className += "thead-dark";
     let headrow = theader.insertRow(0);
@@ -14,17 +53,14 @@ function createThead() {
         headrow.appendChild(headcell);
     }
 }
-createThead();
-
 //Remove body of the table
-function removeOldTbody() {
+function removeOldTbody(table) {
     let tbodyArray = Array.from(table.getElementsByTagName('tbody'));
     tbodyArray.forEach((oneTBody) => table.removeChild(oneTBody));
 }
 
-
 //Create body Table
-function createTbodyOfTable(i, tbody) {
+function createTbodyOfTable(i, tbody, memberData) {
     console.log('add row');
     let fullname = (memberData[i].first_name + ' ' + memberData[i].middle_name + ' ' + memberData[i].last_name).link(memberData[i].url);
     let bodyArray = [fullname, memberData[i].party, memberData[i].state, memberData[i].seniority, memberData[i].votes_with_party_pct + '%'];
@@ -37,8 +73,7 @@ function createTbodyOfTable(i, tbody) {
 }
 
 //Create body of the table display all members in senate
-function getDataSenate() {
-    let tbody = table.createTBody();
+function getDataSenate(table, memberData, tbody) {
     for (let i = 0; i < memberData.length; i++) {
         createTbodyOfTable(i, tbody, memberData);
     }
@@ -66,11 +101,12 @@ function displayStateList(array) {
         list.firstChild.setAttribute('value', '');
     }
 }
-displayStateList(memberData);
 
 //Main function
 function filterData() {
-    removeOldTbody();
+    let memberData = data.results[0].members;
+    let table = document.getElementById("mem-data");
+    removeOldTbody(table);
     let array = [];
     let checkedValue = document.getElementsByClassName('checkparty');
     for (let j = 0; j < checkedValue.length; j++) {
@@ -85,12 +121,12 @@ function filterData() {
     arrayOption.push(value);
 
     let tbody = table.createTBody('tbody');
-
+    
     if (array.length != 0 && arrayOption == "") {
         for (let k = 0; k < array.length; k++) {
             for (let i = 0; i < memberData.length; i++) {
                 if (memberData[i].party === array[k]) {
-                    createTbodyOfTable(i, tbody);
+                    createTbodyOfTable(i, tbody, memberData);
                 }
             }
         }
@@ -98,18 +134,17 @@ function filterData() {
         for (let k = 0; k < array.length; k++) {
             for (let i = 0; i < memberData.length; i++) {
                 if (memberData[i].party === array[k] && memberData[i].state == value) {
-                    createTbodyOfTable(i, tbody);
+                    createTbodyOfTable(i, tbody, memberData);
                 }
             }
         }
     } else if (array.length == 0 && arrayOption != "") {
         for (let i = 0; i < memberData.length; i++) {
             if (memberData[i].state == value) {
-                createTbodyOfTable(i, tbody);
+                createTbodyOfTable(i, tbody, memberData);
             }
         }
     } else {
-        getDataSenate();
+        getDataSenate(table, memberData, tbody);
     }
 }
-filterData();
