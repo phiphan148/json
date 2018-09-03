@@ -115,7 +115,7 @@ function displaySecondRowTable(array, table) {
     array.forEach(mem => {
         let row = tbody.insertRow();
         let cell = row.insertCell();
-        cell.innerHTML = (mem.first_name + ' ' + mem.middle_name + ' ' + mem.last_name).replace(null, ' ');
+        cell.innerHTML = "<a class='text-body' href='" + mem.url + "'>" + (mem.first_name + ' ' + mem.middle_name + ' ' + mem.last_name).replace(null, ' ') + "</a>";
         let cell2 = row.insertCell();
         cell2.innerHTML = Math.round(((mem.total_votes - mem.missed_votes) * mem.votes_with_party_pct) / 100);
         let cell3 = row.insertCell();
@@ -129,7 +129,7 @@ function displaySecondRowTable2(array, table) {
     array.forEach(mem => {
         let row = tbody.insertRow();
         let cell = row.insertCell();
-        cell.innerHTML = (mem.first_name + ' ' + mem.middle_name + ' ' + mem.last_name).replace(null, ' ');
+        cell.innerHTML = "<a class='text-body' href='" + mem.url + "'>" + (mem.first_name + ' ' + mem.middle_name + ' ' + mem.last_name).replace(null, ' ') + "</a>";
         let cell2 = row.insertCell();
         cell2.innerHTML = mem.missed_votes;
         let cell3 = row.insertCell();

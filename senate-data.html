@@ -94,33 +94,10 @@
                     </form>
                 </div>
             </div>
-            <!-- <div id="selector">
-                <div class="checkbox">
-                    <input type="checkbox" id="Democrat" value="Democrat" v-model="checked">
-                    <label for="Democrat">Democrat</label>
-                    <input type="checkbox" id="Republican" value="Republican" v-model="checked">
-                    <label for="Republican">Republican</label>
-                    <input type="checkbox" id="Independent" value="Independent" v-model="checked">
-                    <label for="Independent">Independent</label>
-                </div>
-                <div class="container" id="app-container" for="Democrat" v-if="checked">
-                    <table class="table table-borderless mt-5 filter-states">
-                        <tbody>
-                            <tr v-for="mem in senator" v-if="mem.party == 'D'">
-                                <td>{{mem.first_name}} {{mem.middle_name}} {{mem.last_name}}</td>
-                                <td>{{mem.party}}</td>
-                                <td>{{mem.state}}</td>
-                                <td>{{mem.seniority}}</td>
-                                <td>{{mem.votes_with_party_pct + '%'}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div> -->
             <table id="mem-data" class="table table-borderless mt-5 filter-states">
                 <tbody id="congress-table">
                     <tr v-for="mem in senator">
-                        <td>{{mem.first_name}} {{mem.middle_name}} {{mem.last_name}}</td>
+                        <td><a class="text-body" v-bind:href="mem.url">{{mem.first_name}} {{mem.middle_name}} {{mem.last_name}}</a></td>
                         <td>{{mem.party}}</td>
                         <td>{{mem.state}}</td>
                         <td>{{mem.seniority}}</td>
