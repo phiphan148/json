@@ -1,50 +1,50 @@
 var data;
 
-var dataStatisticsByVue = new Vue({
-    el: '#statistics',
+var byVue = new Vue({
+    el: "#main-content",
     data: {
-        glanceStatistics: {},
-    }
-});
+        glanceStatistics: [],
+    },
+    created: function () {
+        this.getData();
+    },
+    methods: {
+        getData: function () {
+            let pathSenate = 'senate';
+            let url = '';
+            let currentPage = window.location.href;
+            let typeSenator = 'attendance';
+            if (currentPage.includes(pathSenate)) {
+                url = 'https://api.myjson.com/bins/1eja30';
 
-onload = (function () {
-    let pathSenate = 'senate';
-    let url = '';
-    let currentPage = window.location.href;
-    let typeSenator = 'attendance';
-    if (currentPage.includes(pathSenate)) {
-        url = 'https://api.myjson.com/bins/1eja30';
-
-    } else {
-        url = 'https://api.myjson.com/bins/j83do';
-    }
-    fetch(url)
-        .then(response => response.json())
-        .then((jsonData) => {
-            data = jsonData;
-            let memberData = data.results[0].members;
-            let table1 = document.querySelector('.top');
-            let table2 = document.querySelector('.least');
-            let topEngaged = [];
-            let bottomEngaged = [];
-            if (currentPage.includes(typeSenator)) {
-                attendance(table1, table2, memberData, topEngaged, bottomEngaged)
             } else {
-                loyalty(table1, table2, memberData, topEngaged, bottomEngaged)
+                url = 'https://api.myjson.com/bins/j83do';
             }
-            var statistics = {
-                Democrats: 0,
-                Republicants: 0,
-                Independents: 0,
-                Total: 0,
-                DemocratsPct: 0,
-                RepublicantsPct: 0,
-                IndependentsPct: 0,
-                TotalPct: 0,
-            };
-            myFunction(memberData, statistics);
-            dataStatisticsByVue.glanceStatistics = statistics;
-        });
+            fetch(url)
+                .then(response => response.json())
+                .then((jsonData) => {
+                    data = jsonData;
+                    let memberData = data.results[0].members;
+                    let table1 = document.querySelector('.top');
+                    let table2 = document.querySelector('.least');
+                    let topEngaged = [];
+                    let bottomEngaged = [];
+                    if (currentPage.includes(typeSenator)) {
+                        attendance(table1, table2, memberData, topEngaged, bottomEngaged)
+                    } else {
+                        loyalty(table1, table2, memberData, topEngaged, bottomEngaged)
+                    }
+                    var statistics = {
+                        info: [{ label: 'Democrats', Partyinfo: { party: 'D', Memnum: 0, PctVotes: 0, } },
+                        { label: 'Republicants', Partyinfo: { party: 'R', Memnum: 0, PctVotes: 0, } },
+                        { label: 'Independents', Partyinfo: { party: 'I', Memnum: 0, PctVotes: 0, } },
+                        { label: 'Total', Partyinfo: { party: '', Memnum: 0, PctVotes: 0, } }]
+                    };
+                    myFunction(memberData, statistics);
+                    this.glanceStatistics = statistics.info;
+                });
+        },
+    },
 })
 
 //Functions will be loaded first
@@ -56,28 +56,24 @@ function myFunction(memberData, statistics) {
 //Calculate the information of each Party
 function getNumberOfEachPartyVue(memberData, statistics) {
     memberData.forEach(element => {
-        if (element.party === 'D') {
-            statistics.Democrats += 1;
-            statistics.DemocratsPct += element.votes_with_party_pct;
-        } else if (element.party === 'R') {
-            statistics.Republicants += 1;
-            statistics.RepublicantsPct += element.votes_with_party_pct;
+        for (let i = 0; i < statistics.info.length; i++) {
+            if (element.party === statistics.info[i].Partyinfo.party) {
+                statistics.info[i].Partyinfo.Memnum += 1;
+                statistics.info[i].Partyinfo.PctVotes += element.votes_with_party_pct;
+            }
+        }
+    })
+
+    for (let j = 0; j < statistics.info.length - 1; j++) {
+        if (statistics.info[j].Partyinfo.Memnum != 0) {
+            statistics.info[statistics.info.length - 1].Partyinfo.Memnum += statistics.info[j].Partyinfo.Memnum;
+            statistics.info[statistics.info.length - 1].Partyinfo.PctVotes += statistics.info[j].Partyinfo.PctVotes;
+            statistics.info[j].Partyinfo.PctVotes = + Number.parseFloat(statistics.info[j].Partyinfo.PctVotes / statistics.info[j].Partyinfo.Memnum).toFixed(2);
         } else {
-            statistics.Independents += 1;
-            statistics.IndependentsPct += element.votes_with_party_pct;
+            statistics.info[j].Partyinfo.PctVotes = 0;
         }
     }
-    )
-    statistics.Total = statistics.Democrats + statistics.Republicants + statistics.Independents;
-    statistics.TotalPct = + Number.parseFloat((statistics.DemocratsPct + statistics.RepublicantsPct + statistics.IndependentsPct) / statistics.Total).toFixed(2);
-    statistics.DemocratsPct = + Number.parseFloat(statistics.DemocratsPct / statistics.Democrats).toFixed(2);
-    statistics.RepublicantsPct = + Number.parseFloat(statistics.RepublicantsPct / statistics.Republicants).toFixed(2);
-    statistics.IndependentsPct = + Number.parseFloat(statistics.IndependentsPct / statistics.Independents).toFixed(2);
-    if (statistics.Democrats != 0 && statistics.Republicants != 0 && statistics.Independents != 0) {
-    }
-    else {
-        statistics.IndependentsPct = 0;
-    }
+    statistics.info[statistics.info.length - 1].Partyinfo.PctVotes = + Number.parseFloat(statistics.info[statistics.info.length - 1].Partyinfo.PctVotes / statistics.info[statistics.info.length - 1].Partyinfo.Memnum).toFixed(2);
 }
 
 //Display Header of first table --> Senate/House at a glance
@@ -121,7 +117,7 @@ function displaySecondRowTable(array, table) {
         let cell = row.insertCell();
         cell.innerHTML = (mem.first_name + ' ' + mem.middle_name + ' ' + mem.last_name).replace(null, ' ');
         let cell2 = row.insertCell();
-        cell2.innerHTML = mem.total_votes;
+        cell2.innerHTML = Math.round(((mem.total_votes - mem.missed_votes) * mem.votes_with_party_pct) / 100);
         let cell3 = row.insertCell();
         cell3.innerHTML = mem.votes_with_party_pct;
     })

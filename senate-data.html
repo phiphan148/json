@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <div class="text-body">
+    <div id="main-content" class="text-body">
         <div class="header">
             <div class="container-fluid h-100">
                 <div class="row h-100">
@@ -94,6 +94,29 @@
                     </form>
                 </div>
             </div>
+            <!-- <div id="selector">
+                <div class="checkbox">
+                    <input type="checkbox" id="Democrat" value="Democrat" v-model="checked">
+                    <label for="Democrat">Democrat</label>
+                    <input type="checkbox" id="Republican" value="Republican" v-model="checked">
+                    <label for="Republican">Republican</label>
+                    <input type="checkbox" id="Independent" value="Independent" v-model="checked">
+                    <label for="Independent">Independent</label>
+                </div>
+                <div class="container" id="app-container" for="Democrat" v-if="checked">
+                    <table class="table table-borderless mt-5 filter-states">
+                        <tbody>
+                            <tr v-for="mem in senator" v-if="mem.party == 'D'">
+                                <td>{{mem.first_name}} {{mem.middle_name}} {{mem.last_name}}</td>
+                                <td>{{mem.party}}</td>
+                                <td>{{mem.state}}</td>
+                                <td>{{mem.seniority}}</td>
+                                <td>{{mem.votes_with_party_pct + '%'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div> -->
             <table id="mem-data" class="table table-borderless mt-5 filter-states">
                 <tbody id="congress-table">
                     <tr v-for="mem in senator">
@@ -110,7 +133,6 @@
             <p>2016 TGIF</p>
         </div>
     </div>
-    <!-- <script src="./js/congress-113-senate.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
     <script src="./js/get-data.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

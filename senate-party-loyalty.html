@@ -13,7 +13,7 @@
 </head>
 
 <body style="height: 100%">
-    <div class="text-body">
+    <div id="main-content" class="text-body">
         <div>
             <div class="container-fluid h-100">
                 <div class="row h-100">
@@ -84,9 +84,10 @@
                     <h5>Senate at a glance</h5>
                     <table id="glance" class="table table-bordered mt-3">
                         <tbody id="statistics">
-                            <tr v-for="(value, key) in glanceStatistics">
-                                <td>{{ key }}</td>
-                                <td>{{ value }}</td>
+                            <tr v-for="item in glanceStatistics">
+                                <td>{{ item.label }}</td>
+                                <td>{{ item.Partyinfo.Memnum }}</td>
+                                <td>{{ item.Partyinfo.PctVotes }}</td>
                             </tr>
                         </tbody>
                     </table>

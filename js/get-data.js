@@ -1,4 +1,3 @@
-// document.getElementById("mem-data").innerHTML = JSON.stringify(data,null,2);
 var data;
 
 var dataByVue = new Vue({  
@@ -6,7 +5,7 @@ var dataByVue = new Vue({
     data: {    
       senator : [],
     },
-  }); 
+  });
 
 onload = (function () {
     let pathSenate = 'senate';

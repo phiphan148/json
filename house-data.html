@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <div class="text-body">
+    <div id="main-content" class="text-body">
         <div>
             <div class="container-fluid h-100">
                 <div class="row h-100">
@@ -83,22 +83,23 @@
                 every state is entitled to at least one representative. </p>
             <div class="filter-all-data container">
                 <div class="row">
-                    <form action="">
-                        <span class="pr-2"><input id="democrat" class="checkparty mr-1" type="checkbox" name="Democrat" onclick="filterData()"
-                                value="D">Democrat</span>
-                        <span class="pr-2"><input id="republican" class="checkparty mr-1" type="checkbox" name="Republican"
-                                onclick="filterData()" value="R">Republican</span>
-                        <span class="pr-2"><input id="independent" class="checkparty mr-1" type="checkbox" name="Independent"
-                                onclick="filterData()" value="I">Independent</span>
-                        <span class="states">
-
-                        </span>
-                    </form>
+                    <span class="col-2"><input type="checkbox" v-model="checkarr" value="D" /> Democrat</span>
+                    <span class="col-2"><input type="checkbox" v-model="checkarr" value="R" /> Repbulic</span>
+                    <span class="col-2"><input type="checkbox" v-model="checkarr" value="I" /> Independent</span>
+                    <select v-model="selectarr">
+                        <option value=''>Choose state</option>
+                        <option v-for="state in statesarr">{{state}}</option>
+                    </select>
                 </div>
             </div>
-            <table id="mem-data" class="table table-borderless mt-5 filter-states">
-                <tbody id="congress-table">
-                    <tr v-for="mem in senator">
+            <table id="mem-data" class="table table-borderless mt-3 filter-states">
+                <thead class="thead-dark">
+                    <tr>
+                        <th v-for="item in headerArray">{{item}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="mem in displayParty">
                         <td>{{mem.first_name}} {{mem.middle_name}} {{mem.last_name}}</td>
                         <td>{{mem.party}}</td>
                         <td>{{mem.state}}</td>
@@ -114,7 +115,7 @@
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
-    <script src="./js/get-data.js"></script>
+    <script src="./js/get-data-total-in-vue.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
